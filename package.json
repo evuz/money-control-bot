@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "date-fns": "^1.30.1",
+    "money-control-domain": "github:evuz/money-control-domain#semver:^0.1.0",
     "mongodb": "^3.1.10",
     "node-telegram-bot-api": "^0.30.0",
     "reflect-metadata": "^0.1.10",
@@ -28,7 +29,7 @@
     "typeorm": "0.2.9"
   },
   "scripts": {
-    "start": "node build/index.js",
+    "start": "node -r dotenv/config build/index.js",
     "build": "tsc",
     "dev": "nodemon --watch 'src/**/*.ts' -r dotenv/config --ignore 'src/**/*.spec.ts' --exec 'node --inspect -r ts-node/register' src/index.ts",
     "test": "jest",

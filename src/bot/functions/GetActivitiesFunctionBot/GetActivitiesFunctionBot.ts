@@ -1,11 +1,11 @@
 import { InlineKeyboardMarkup, EditMessageTextOptions } from 'node-telegram-bot-api';
 import { format, startOfMonth, addMonths } from 'date-fns';
+import { Activity } from 'money-control-domain';
 
 import { FunctionBot } from '../models/FunctionBot';
 import { ITelegramBotOnText, IAddCallbackQuery, ICallbackQueryFunction } from '../../types';
 import { CallbackQuery, CallbackQueryDataKeys } from './types';
 import { domain } from '../../../domain';
-import { Activity } from '../../../domain/activity/Entities/Activity';
 
 export class GetActivitiesFunctionBot extends FunctionBot {
   public regex = /^\/get_activities$/;

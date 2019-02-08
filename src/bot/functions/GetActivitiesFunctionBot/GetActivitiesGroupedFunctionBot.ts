@@ -1,5 +1,6 @@
+import { Activity } from 'money-control-domain';
+
 import { GetActivitiesFunctionBot } from './GetActivitiesFunctionBot';
-import { Activity } from '../../../domain/activity/Repositories/MongoActivityRepository/Activity.entity';
 import { CallbackQuery } from './types';
 
 export class GetActivitiesGroupedFunctionBot extends GetActivitiesFunctionBot {

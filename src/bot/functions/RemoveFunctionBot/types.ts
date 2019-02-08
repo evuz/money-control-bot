@@ -1,4 +1,4 @@
-import { Activity } from '../../../domain/activity/Entities/Activity';
+import { Activity } from 'money-control-domain';
 
 export enum CallbackQuery {
   Key = 'REMOVE_ACTIVITY',

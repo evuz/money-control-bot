@@ -1,7 +1,8 @@
+import { User } from 'money-control-domain';
+
 import { FunctionBot } from './models/FunctionBot';
 import { ITelegramBotOnText } from '../types';
 import { domain } from '../../domain';
-import { User } from '../../domain/users/Entities/User';
 import { User as TelegramUser } from 'node-telegram-bot-api';
 
 export class StartFunctionBot extends FunctionBot {

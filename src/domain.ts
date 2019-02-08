@@ -1,8 +1,5 @@
 import { Domain } from 'ts-domain';
-
-import { DatabaseUseCaseFactory } from './database/UseCase/factory';
-import { UsersUseCaseFactory } from './users/UseCases/factory';
-import { ActivityUseCaseFactory } from './activity/UseCases/factory';
+import { DatabaseUseCaseFactory, UsersUseCaseFactory, ActivityUseCaseFactory } from 'money-control-domain';
 
 const useCases = {
   start_database: DatabaseUseCaseFactory.startDatabaseUseCase(),
