@@ -1,5 +1,3 @@
-import 'reflect-metadata';
-
 import { domain } from './domain';
 import { config } from './config';
 import { run } from './bot/run';
