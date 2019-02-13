@@ -3,13 +3,12 @@ import { DatabaseUseCaseFactory, UsersUseCaseFactory, ActivityUseCaseFactory } f
 
 const useCases = {
   start_database: DatabaseUseCaseFactory.startDatabaseUseCase(),
-  get_all_users: UsersUseCaseFactory.getAllUsersUseCase(),
   new_user: UsersUseCaseFactory.newUsersUseCase(),
-  new_expense: ActivityUseCaseFactory.newExpenseUseCase(),
-  new_income: ActivityUseCaseFactory.newIncomeUseCase(),
+  new_expense: ActivityUseCaseFactory.newExpenseByTelegramIdUseCase(),
+  new_income: ActivityUseCaseFactory.newIncomeByTelegramIdUseCase(),
   get_activity: ActivityUseCaseFactory.getActivityUseCase(),
-  get_activities_by_month: ActivityUseCaseFactory.getActivitiesByMonthUseCase(),
-  get_activities_by_month_paginated: ActivityUseCaseFactory.getActivitiesByMonthPaginatedUseCase(),
+  get_activities_by_month: ActivityUseCaseFactory.getActivitiesByTelegramIdMonthUseCase(),
+  get_activities_by_month_paginated: ActivityUseCaseFactory.getActivitiesByTelegramIdMonthPaginatedUseCase(),
   remove_activity: ActivityUseCaseFactory.removeActivityUseCase(),
 };
 

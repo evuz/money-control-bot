@@ -64,7 +64,7 @@ export class ExpenseFunctionBot extends ActivityFunctionBot {
   };
 
   private acceptExpense = ({ msg, data, botFunctions }: ICallbackQueryFunction) => {
-    const userId = msg.from.id;
+    const userId = msg.from.id.toString();
     const opts: EditMessageTextOptions = {
       message_id: msg.message_id,
       chat_id: msg.chat.id,
@@ -74,7 +74,7 @@ export class ExpenseFunctionBot extends ActivityFunctionBot {
       return botFunctions.editMessageText({ opts, text: 'You can introduce a new /expense' });
     }
     const { amount, concept, date } = this.getActivity({ userId });
-    domain.get({ useCase: 'new_expense' }).execute({ activity: { amount, concept, userId, date } });
+    domain.get({ useCase: 'new_expense' }).execute({ activity: { amount, concept, date }, telegramId: userId });
     return botFunctions.editMessageText({ opts, text: 'Your expense have been added' });
   };
 }

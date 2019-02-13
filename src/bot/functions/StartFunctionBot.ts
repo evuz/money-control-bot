@@ -1,4 +1,4 @@
-import { User } from 'money-control-domain';
+import { User, UserWithoutId } from 'money-control-domain';
 
 import { FunctionBot } from './models/FunctionBot';
 import { ITelegramBotOnText } from '../types';
@@ -10,10 +10,10 @@ export class StartFunctionBot extends FunctionBot {
 
   // If it is a function class, throw error_polling
   static saveUser({ user }: { user: TelegramUser }): Promise<User> {
-    const newUser: User = {
-      userId: user.id,
+    const newUser: UserWithoutId = {
+      telegramId: user.id.toString(),
       username: user.username,
-      firstName: user.first_name,
+      firstname: user.first_name,
     };
     return domain.get({ useCase: 'new_user' }).execute({ user: newUser });
   }

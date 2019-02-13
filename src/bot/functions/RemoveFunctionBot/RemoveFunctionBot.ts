@@ -13,12 +13,12 @@ export class RemoveFunctionBot extends FunctionBot {
 
   public execute = ({ msg, botFunctions }: ITelegramBotOnText) => {
     const chatId = msg.chat.id;
-    const userId = msg.from.id;
+    const userId = msg.from.id.toString();
 
     const date = Date.now();
     domain
       .get({ useCase: 'get_activities_by_month_paginated' })
-      .execute({ userId, date, take: PAGE_SIZE, page: 0 })
+      .execute({ date, take: PAGE_SIZE, page: 0, telegramId: userId })
       .then(({ results, total }) => {
         botFunctions.sendMessage({
           chatId,
@@ -44,7 +44,7 @@ export class RemoveFunctionBot extends FunctionBot {
       message_id: msg.message_id,
       chat_id: msg.chat.id,
     };
-    const userId = msg.from.id;
+    const userId = msg.from.id.toString();
 
     switch (data[CallbackQueryData.Option]) {
       case CallbackQuery.ChangePage: {
@@ -52,7 +52,7 @@ export class RemoveFunctionBot extends FunctionBot {
         const page = +data[CallbackQueryData.Id];
         return domain
           .get({ useCase: 'get_activities_by_month_paginated' })
-          .execute({ userId, date, page, take: PAGE_SIZE })
+          .execute({ date, page, take: PAGE_SIZE, telegramId: userId })
           .then(({ results, total }) => {
             return botFunctions.editMessageText({
               text: 'Select activity to remove',
@@ -65,7 +65,7 @@ export class RemoveFunctionBot extends FunctionBot {
         const page = 0;
         return domain
           .get({ useCase: 'get_activities_by_month_paginated' })
-          .execute({ userId, date, page, take: PAGE_SIZE })
+          .execute({ date, page, take: PAGE_SIZE, telegramId: userId })
           .then(({ results, total }) => {
             return botFunctions.editMessageText({
               text: 'Select activity to remove',

@@ -13,10 +13,10 @@ export class GetActivitiesFunctionBot extends FunctionBot {
 
   public execute = ({ msg, botFunctions }: ITelegramBotOnText) => {
     const chatId = msg.chat.id;
-    const userId = msg.from.id;
+    const userId = msg.from.id.toString();
     domain
       .get({ useCase: 'get_activities_by_month' })
-      .execute({ userId, date: Date.now() })
+      .execute({ date: Date.now(), telegramId: userId })
       .then(({ results: activities }) => {
         const text = this.activitiesToSummary({ activities });
         const opts = { reply_markup: this.inlineKeyboard({ date: Date.now() }) };
@@ -43,6 +43,7 @@ export class GetActivitiesFunctionBot extends FunctionBot {
   };
 
   private changeMonth = async ({ msg, data, botFunctions }: ICallbackQueryFunction) => {
+    const userId = msg.from.id.toString();
     const options: EditMessageTextOptions = {
       message_id: msg.message_id,
       chat_id: msg.chat.id,
@@ -50,12 +51,10 @@ export class GetActivitiesFunctionBot extends FunctionBot {
 
     switch (data[CallbackQueryDataKeys.Option]) {
       case CallbackQuery.NextMonth: {
-        const userId = msg.from.id;
         const date = addMonths(+data[CallbackQueryDataKeys.Date], 1).getTime();
         return botFunctions.editMessageText(await this.editMessage({ date, userId, options }));
       }
       case CallbackQuery.PreviousMonth:
-        const userId = msg.from.id;
         const date = addMonths(+data[CallbackQueryDataKeys.Date], -1).getTime();
         return botFunctions.editMessageText(await this.editMessage({ date, userId, options }));
       default:
@@ -63,8 +62,10 @@ export class GetActivitiesFunctionBot extends FunctionBot {
     }
   };
 
-  private editMessage = async ({ date, userId, options }: { date: number; userId: string | number; options: any }) => {
-    const { results: activities } = await domain.get({ useCase: 'get_activities_by_month' }).execute({ userId, date });
+  private editMessage = async ({ date, userId, options }: { date: number; userId: string; options: any }) => {
+    const { results: activities } = await domain
+      .get({ useCase: 'get_activities_by_month' })
+      .execute({ date, telegramId: userId });
     const text = this.activitiesToSummary({ activities });
     const opts = { ...options, reply_markup: this.inlineKeyboard({ date }) };
     return { text, opts };
